@@ -1,19 +1,12 @@
-// import something here
+const io = require('socket.io-client');
 const feathers = require('@feathersjs/feathers');
-const rest = require('@feathersjs/rest-client');
-
-import axios from 'axios'
+const socketio = require('@feathersjs/socketio-client');
+const socket = io('http://localhost:3030');
 
 const appfeathers = feathers();
-
-// // Connect to the same as the browser URL (only in the browser)
-// const restClient = rest();
-
-// Connect to a different URL
-const restClient = rest('http://localhost:3030');
+appfeathers.configure(socketio(socket));
 
 // "async" is optional
 export default async ({ Vue }) => {
   Vue.prototype.$appfeathers = appfeathers
-  appfeathers.configure(restClient.axios(axios))
 }
